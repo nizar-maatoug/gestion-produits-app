@@ -1,1 +1,6 @@
-<p>product works!</p>
+<h2>Liste des produits</h2>
+<ul>
+@for (product of productService.products(); track product.id) {
+  <li>{{product.designation}}</li>
+}
+</ul>
