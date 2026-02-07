@@ -1,6 +1,6 @@
-<h2>Liste des produits</h2>
-<ul>
-@for (product of productService.products(); track product.id) {
-  <li>{{product.designation}}</li>
-}
-</ul>
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h2 class="m-0">Products</h2>
+</div>
+
+<router-outlet />

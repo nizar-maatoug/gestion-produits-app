@@ -1,1 +1,18 @@
-<p>product-detail works!</p>
+
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Product Detail</h4>
+    <p class="text-muted">Showing product Detail</p>
+    <p class="card-text text-muted mb-3">
+      Designation: <strong>{{ productService.product()?.designation}}</strong>
+    </p>
+    <p class="card-text text-muted mb-3">
+      Price: <strong>{{ productService.product()?.price | currency }}</strong>
+    </p>
+
+    <div class="d-flex gap-2">
+      <a class="btn btn-outline-secondary" routerLink="/products">Back</a>
+      <a class="btn btn-primary" [routerLink]="['/products',productService.product()?.id, 'edit']">Edit</a>
+    </div>
+  </div>
+</div>

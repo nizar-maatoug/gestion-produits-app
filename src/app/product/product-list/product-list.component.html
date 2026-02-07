@@ -1,1 +1,8 @@
-<p>product-list works!</p>
+
+<div class="row g-3">
+  @for (p of productService.products(); track p.id) {
+    <div class="col-12 col-md-6 col-lg-4">
+      <app-product-item [product]="p" />
+    </div>
+  }
+</div>

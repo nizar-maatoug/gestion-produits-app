@@ -1,1 +1,18 @@
-<p>product-item works!</p>
+
+<div class="card h-100 shadow-sm">
+  <div class="card-body">
+    <h5 class="card-title mb-1">{{ product().designation }}</h5>
+    <p class="card-text text-muted mb-3">
+      Price: <strong>{{ product().price | currency:'TND':'DT':'1.2-2' }}</strong>
+    </p>
+
+    <div class="d-flex gap-2">
+      <a class="btn btn-outline-primary btn-sm" [routerLink]="['/products', product().id]">
+        Details
+      </a>
+      <a class="btn btn-primary btn-sm" [routerLink]="['/products', product().id, 'edit']">
+        Edit
+      </a>
+    </div>
+  </div>
+</div>

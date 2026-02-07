@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, Signal, signal } from '@angular/core';
 import { Product } from '../product/product.model';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { catchError, Observable, of, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -36,16 +36,24 @@ export class ProductService {
 
   getById(id:number): Observable<Product|null>{
     this.isLoading.set(true);
-    return this.http.get<Product|null>(`{this.baseUrl}/{id}`).pipe(
+    return this.http.get<Product>(`${this.baseUrl}/${id}`,{ headers: this.json }).pipe(
       tap(p => this.product.set(p)),
       tap(p => this.isLoading.set(false)),
+
+      catchError(err => {
+        console.error(err);
+        return of(null as any);
+    })
+
     );
   }
 
   create(product: Product){
     this.isLoading.set(true);
+    console.log(product);
     return this.http.post<Product>(this.baseUrl,product,{ headers: this.json }).pipe(
-      tap(created => this.getAll()),
+      tap(created => console.log("created", created)),
+      tap(created => this.getAll().subscribe()),
       catchError(err => this.fail(err)),
     );
   }
@@ -54,15 +62,15 @@ export class ProductService {
     this.isLoading.set(true);
     return this.http.put<Product>(this.baseUrl,product,{ headers: this.json })
     .pipe(
-      tap(updated => this.getAll()),
+      tap(updated => this.getAll().subscribe()),
       catchError(err => this.fail(err)),
     );
   }
 
   delete(id: number){
     this.isLoading.set(true);
-    return this.http.delete(`{this.baseUrl}/{id}`).pipe(
-      tap(this.getAll()),
+    return this.http.delete(`${this.baseUrl}/${id}`).pipe(
+      tap(this.getAll().subscribe()),
       catchError(err => this.fail(err))
     );
   }

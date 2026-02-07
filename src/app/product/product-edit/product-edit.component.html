@@ -1,1 +1,77 @@
-<p>product-edit works!</p>
+<h2>{{caption()}}</h2>
+<form #f="ngForm" (ngSubmit)="submit(f)" class="form-container">
+
+
+<!-- DESIGNATION -->
+  <div class="mb-3">
+    <label for="designation" class="form-label">Designation</label>
+    <input
+      type="text"
+      id="designation"
+      name="designation"
+      class="form-control"
+      [class.is-invalid]="f.submitted && !f.controls['designation']?.valid"
+      [(ngModel)]="product().designation"
+      required
+      minlength="3"
+      placeholder="Enter product name" />
+
+    @if (f.submitted && !f.controls['designation']?.valid) {
+      <div class="invalid-feedback d-block">
+        Designation is required (min 3 characters).
+      </div>
+    }
+    </div>
+
+
+
+
+<!-- PRICE -->
+    <div class="mb-3">
+      <label for="price" class="form-label">Price</label>
+
+      <!-- Input group with DT suffix -->
+      <div class="input-group">
+        <input
+          type="number"
+          id="price"
+          name="price"
+          class="form-control"
+          [class.is-invalid]="f.submitted && !f.controls['price']?.valid"
+          [(ngModel)]="product().price"
+          required
+          min="0"
+          step="0.01"
+          placeholder="0.00" />
+        <span class="input-group-text">DT</span>
+      </div>
+
+      @if (f.submitted && !f.controls['price']?.valid) {
+        <div class="invalid-feedback d-block">
+          Price is required and must be ≥ 0.
+        </div>
+      }
+
+      @if (product().price != null) {
+          <div class="form-text mt-1">
+            <strong>Preview:</strong>
+            {{ product().price | currency:'TND':'DT':'1.2-2' }}
+          </div>
+      }
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="d-flex gap-2">
+    <a class="btn btn-outline-secondary" routerLink="/products">Back</a>
+    <button type="submit" class="btn btn-primary" [disabled]="f.invalid">
+      Save
+    </button>
+  </div>
+
+
+
+
+</form>
+
+
+

@@ -1,17 +1,13 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { ProductService } from '../core/product.service';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-product',
-  imports: [],
+  imports: [RouterOutlet],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css',
 })
-export class ProductComponent implements OnInit{
+export class ProductComponent{
 
-  productService = inject(ProductService);
 
-  ngOnInit(): void {
-    this.productService.getAll().subscribe();
-  }
 }
